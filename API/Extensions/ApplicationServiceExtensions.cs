@@ -3,6 +3,8 @@
 using Application.Activities;
 using Application.Core;
 using MediatR;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -30,6 +32,9 @@ services.AddCors(opt =>
 
 services.AddMediatR(typeof(List.Handler));
 services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+services.AddFluentValidationAutoValidation();
+services.AddValidatorsFromAssemblyContaining<Create>();
+
 
 return services;
         }
