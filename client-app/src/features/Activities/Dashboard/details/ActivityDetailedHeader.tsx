@@ -6,7 +6,7 @@ import {Button, Header, Item, Segment, Image} from 'semantic-ui-react'
 import {Activity} from '../../../../app/layout/models/activity';
 
 const activityImageStyle = {
-    filter: 'brightness(30%)'
+    filter: 'brightness(50%)'
 };
 
 const activityImageTextStyle = {
