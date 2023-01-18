@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Application.Interfaces;
 using Infrastructure.Security;
+using Infrastructure.Photos;
 
 namespace API.Extensions
 {
@@ -38,6 +39,9 @@ services.AddFluentValidationAutoValidation();
 services.AddValidatorsFromAssemblyContaining<Create>();
 services.AddHttpContextAccessor();
 services.AddScoped<IUserAccessor, UserAccessor>();
+services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+
 
 
 return services;
