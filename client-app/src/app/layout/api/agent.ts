@@ -22,7 +22,7 @@ const sleep = (delay:number) => {
 
 
     axios.interceptors.response.use(async response => {
-        await sleep(1000);
+        //await sleep(1000);
         return response;
     },(error: AxiosError) =>{
         const {data,status,config } = error.response as AxiosResponse;
@@ -87,6 +87,7 @@ const sleep = (delay:number) => {
     
     const Profiles = {
         get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+        update: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
         uploadPhoto: (file: Blob) => {
             let formData = new FormData();
             formData.append('File', file);

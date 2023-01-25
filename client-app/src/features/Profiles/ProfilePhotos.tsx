@@ -43,7 +43,7 @@ export default observer (function ProfilePhotos({profile}: Props){
                                     setAddPhotoMode(false);
                                 }}/>}
                             {manageMode &&
-                                <Button floated='right' content={addPhotoMode ? 'Cancel' : 'Add Photo'} onClick={()=> setAddPhotoMode(!addPhotoMode)}/>
+                                <Button floated='right' color={addPhotoMode ? 'grey' : 'teal' } content={addPhotoMode ? 'Cancel' : 'Add Photo'} onClick={()=> setAddPhotoMode(!addPhotoMode)}/>
                             }                   
                         </>
                     )}

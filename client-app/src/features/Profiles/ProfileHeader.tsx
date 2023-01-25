@@ -8,7 +8,7 @@ interface Props{
 }
 
 export default observer (function ProfileHeader ({profile}:Props) {
-    console.log(profile.image);
+    
     return (
         <Segment>
             <Grid>

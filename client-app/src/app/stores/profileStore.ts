@@ -36,6 +36,23 @@ loadProfile = async (username: string) => {
     }
 }
 
+updateProfile = async(profile:Partial<Profile>)=>{
+    this.loading=true;
+    try {
+        await agent.Profiles.update(profile);
+        runInAction(()=>{ 
+            if(this.profile && profile){
+                this.profile.bio = profile.bio ?? this.profile.bio;
+                this.profile.displayName = profile.displayName ?? this.profile.displayName;
+            }
+        })
+    }catch(error){
+        console.log(error);      
+    }finally{
+        this.loading=false;
+    }
+}
+
 uploadPhoto = async (file:Blob) => {
     this.uploading = true;
     try {
