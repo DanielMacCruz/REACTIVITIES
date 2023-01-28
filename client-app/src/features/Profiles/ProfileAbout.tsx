@@ -48,7 +48,7 @@ export default observer(function ProfileAbout({profile}:Props) {
                     )}
                     {!editMode && profile.bio &&(
                        
-                            <>
+                            <Segment clearing>
                                 <Item.Group>
                                     <Item >
                                         <Icon name='user' size='large'/>
@@ -59,8 +59,8 @@ export default observer(function ProfileAbout({profile}:Props) {
                                 </Item.Group>
                             
                            
-                                <span>{profile.bio}</span>
-                            </>
+                                <span style={{whiteSpace: 'pre-wrap'}}>{profile.bio}</span>
+                            </Segment>
                         
                     )}
                         

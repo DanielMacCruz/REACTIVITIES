@@ -35,8 +35,10 @@ body{
 }
 
 .masthead h1.ui.header {
-  font-size: 4em;
+  font-size: 60px;
   font-weight: normal;
+  
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .masthead h2 {

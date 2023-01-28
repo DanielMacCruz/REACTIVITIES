@@ -19,7 +19,7 @@ export default class ActivityStore{
     }
     
     get activitiesByDate(){
-        return Array.from(this.activityRegistry.values()).sort((a,b)=>
+        return Array.from(this.activityRegistry.values()).sort((b,a)=>
        a.date!.getTime() - b.date!.getTime());
     }
 
@@ -190,5 +190,15 @@ export default class ActivityStore{
 
     clearSelectedActivity= () => {
         this.selectedActivity = undefined;
+    }
+
+    updateAttendeeFollowing = (username:string) => {
+        this.activityRegistry.forEach(activity =>
+            activity.attendees.forEach(attendee=>{
+                if (attendee.username === username){
+                    attendee.following ? attendee.followersCount-- : attendee.followersCount++;
+                    attendee.following = !attendee.following
+                }
+            }))
     }
 }
