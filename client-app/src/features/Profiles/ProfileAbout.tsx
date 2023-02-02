@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { Button, Grid, Header, Icon, Item, Segment, Tab } from 'semantic-ui-react';
+import { Button, Grid, Header, Icon, Item, Segment, Image, Tab } from 'semantic-ui-react';
 import MyTextArea from '../../app/common/form/MyTextArea';
 import MyTextInput from '../../app/common/form/MyTextInput';
 import { Profile } from '../../app/layout/models/profile';
@@ -44,7 +44,11 @@ export default observer(function ProfileAbout({profile}:Props) {
                         </Segment>
                     )}
                     {!editMode && !profile.bio &&(
-                        <span>{profile.displayName} is a mysterious one :O</span>
+                        <>
+                           <br/>
+                           <span style={{fontSize: 20}}>{profile.displayName} is a mysterious one :O</span>
+                           
+                        </>
                     )}
                     {!editMode && profile.bio &&(
                        
