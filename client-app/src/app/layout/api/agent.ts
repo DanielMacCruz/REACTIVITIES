@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { router } from '../../router/Routes';
 import { store } from '../../stores/store';
-import { Activity, ActivityFormValues } from '../models/activity';
+import { Activity, ActivityFormValues, ProfileActivity } from '../models/activity';
 import { PaginatedResult } from '../models/pagination';
 import { Photo, Profile } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
@@ -92,7 +92,8 @@ const sleep = (delay:number) => {
     }
     
     const Profiles = {
-        get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+        get: (username: string, ) => requests.get<Profile>(`/profiles/${username}`),
+        getActivities:(params:URLSearchParams, username: string) => axios.get<PaginatedResult<ProfileActivity[]>>(`/profiles/${username}/activities`, {params}).then(responseBody),
         update: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
         uploadPhoto: (file: Blob) => {
             let formData = new FormData();

@@ -16,6 +16,12 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Details.Query{Username = username}));
         }
 
+        [HttpGet("{username}/activities")]
+        public async Task<IActionResult> GetProfileActivities(string username, [FromQuery] Application.Activities.ActivityParams param)
+        {
+            return HandleResult(await Mediator.Send(new ProfileActivitiesList.Query{Username = username, Params = param}));
+        }
+
         //[Authorize(Policy ="IsCurrentUser")] TO DO
         [HttpPut]
         public async Task<IActionResult> Edit(Edit.Command command)

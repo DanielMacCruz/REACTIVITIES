@@ -40,9 +40,14 @@ export class ActivityFormValues {
             this.date=activity.date;
             this.venue=activity.venue;
             this.city=activity.city;
-
         }
     }
+}
 
-
+export interface ProfileActivity {
+    id: string;
+    title: string;
+    category: string;
+    date: Date | null;
+    hostUsername? : string;
 }
