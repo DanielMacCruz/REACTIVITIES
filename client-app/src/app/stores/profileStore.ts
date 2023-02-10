@@ -71,6 +71,8 @@ export default class ProfileStore{
         }
     }
 
+   
+
     uploadPhoto = async (file:Blob) => {
         this.uploading = true;
         try {

@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../layout/api/agent";
-import { Activity, ActivityFormValues } from "../layout/models/activity";
+import { Activity, ActivityFormValues, ProfileActivity } from "../layout/models/activity";
 import {v4 as uuid } from 'uuid';
 import { format } from "date-fns";
 import { store } from "./store";
@@ -11,6 +11,7 @@ import { Pagination, PagingParams } from "../layout/models/pagination";
 
 export default class ActivityStore{
     activityRegistry = new Map<string, Activity>();
+    profileActivityRegistry = new Map<string, ProfileActivity>();
     selectedActivity: Activity | undefined = undefined; 
     editMode = false;
     loading = false;
@@ -18,6 +19,8 @@ export default class ActivityStore{
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
     predicate = new Map().set('all', true);
+    isInProfile = false;
+    currentProfile :string='';
 
     
     constructor (){
@@ -28,13 +31,25 @@ export default class ActivityStore{
             () => {
                 this.pagingParams = new PagingParams();
                 this.activityRegistry.clear();
-                this.loadActivities();
+                if(this.isInProfile){
+                    this.listProfileActivities(this.currentProfile);
+                }else{
+                    this.loadActivities();
+                }
             }
         )
     }
 
+    setIsInProfile= (isInProfile: boolean)=>{
+        this.isInProfile = isInProfile;
+    }
+
     setPagingParams = (pagingParams: PagingParams) => {
         this.pagingParams = pagingParams;
+    }
+
+    setCurrentProfile= (username:string)=>{
+        this.currentProfile = username;
     }
 
     setPredicate = (predicate: string,value:string | Date) => {
@@ -60,6 +75,18 @@ export default class ActivityStore{
                 this.predicate.delete('startDate');
                 this.predicate.set('startDate', value);
                 break;
+            case 'past':
+                resetPredicate();
+                this.predicate.set('past', true);
+                break;
+            case 'future':
+                resetPredicate();
+                this.predicate.set('future', true);
+                break;
+            case 'hosting':
+                resetPredicate();
+                this.predicate.set('hosting', true);
+                break;
         }
     }
 
@@ -70,6 +97,8 @@ export default class ActivityStore{
         this.predicate.forEach((value, key)=>{
             if (key === 'startDate') {
                 params.append(key, (value as Date).toISOString())
+            }else if(this.isInProfile){
+                params.append('predicate',key);
             }else{
                 params.append(key,value);
             }
@@ -85,7 +114,7 @@ export default class ActivityStore{
     get groupedActivities(){
         return Object.entries(
             this.activitiesByDate.reduce((activities,activity)=> {
-                const date = format(activity.date!, 'dd MMM yyyy') ;
+                const date = format(activity.date!, 'MMM dd yyyy') ;
                 activities[date] = activities[date] ? [...activities[date], activity] : [activity];
                 return activities;
             }, {} as {[key:string]: Activity[]})
@@ -95,6 +124,7 @@ export default class ActivityStore{
     loadActivities = async () => {
         this.setLoadingInitial(true);
         try{
+
             const result = await agent.Activities.list(this.axiosParams);
             
             result.data.forEach(activity =>{
@@ -108,6 +138,24 @@ export default class ActivityStore{
             this.setLoadingInitial(false);
         }
     }
+
+    listProfileActivities = async (username:string) => {
+        this.setLoadingInitial(true);
+        try{
+            const result = await agent.Activities.listProfileActivities(this.axiosParams, username);
+            
+            result.data.forEach(activity =>{
+            this.profileActivityRegistry.set(activity.id, activity);
+            })
+            this.setPagination(result.pagination);
+            this.setLoadingInitial(false);
+            
+        }catch(error){
+            console.log(error);
+            this.setLoadingInitial(false);
+        }
+    }
+ 
 
     setPagination = (pagination: Pagination) => {
         this.pagination = pagination;
@@ -136,7 +184,7 @@ export default class ActivityStore{
         
     }
     
-    private setActivity = (activity:Activity) =>{
+    private setActivity = (activity: Activity) =>{
         const user = store.userStore.user;
         if (user){
             activity.isGoing = activity.attendees!.some(
@@ -148,7 +196,8 @@ export default class ActivityStore{
         activity.date = new Date(activity.date!);
         this.activityRegistry.set(activity.id,activity);
     }
-    
+
+       
     private getActivity = (id:string)=>{
         return this.activityRegistry.get(id);
     }

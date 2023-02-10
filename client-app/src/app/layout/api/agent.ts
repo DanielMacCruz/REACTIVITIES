@@ -26,7 +26,7 @@ const sleep = (delay:number) => {
         await sleep(500);
         const pagination = response.headers['pagination'];
         if(pagination){
-            response.data = new  PaginatedResult(response.data,JSON.parse(pagination));
+            response.data = new PaginatedResult(response.data,JSON.parse(pagination));
             return response as AxiosResponse<PaginatedResult<any>>
         }
         return response;
@@ -78,6 +78,7 @@ const sleep = (delay:number) => {
     
     const Activities ={
         list: (params:URLSearchParams) => axios.get<PaginatedResult<Activity[]>>('/activities', {params}).then(responseBody),
+        listProfileActivities:(params:URLSearchParams, username: string) => axios.get<PaginatedResult<ProfileActivity[]>>(`/profiles/${username}/activities`, {params}).then(responseBody),
         details: (id:string) => requests.get<Activity>(`/activities/${id}`),
         create: (activity: ActivityFormValues) => requests.post<void>('/activities', activity),
         update: (activity:ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`,activity),
@@ -93,7 +94,6 @@ const sleep = (delay:number) => {
     
     const Profiles = {
         get: (username: string, ) => requests.get<Profile>(`/profiles/${username}`),
-        getActivities:(params:URLSearchParams, username: string) => axios.get<PaginatedResult<ProfileActivity[]>>(`/profiles/${username}/activities`, {params}).then(responseBody),
         update: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
         uploadPhoto: (file: Blob) => {
             let formData = new FormData();
