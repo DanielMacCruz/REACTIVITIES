@@ -3,11 +3,11 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Image } from 'semantic-ui-react';
-import { Activity } from '../../app/layout/models/activity';
+import {  ProfileActivity } from '../../app/layout/models/activity';
 
 
 interface Props{
-    activity: Activity;
+    activity: ProfileActivity;
 }
 
 

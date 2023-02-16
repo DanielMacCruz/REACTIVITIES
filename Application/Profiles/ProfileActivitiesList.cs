@@ -44,8 +44,10 @@ namespace Application.Profiles
                 }
                 else if (request.Params.Predicate == "past"){ 
                     query = query.Where(d=>d.Date < request.Params.StartDate);
-                } else { //the only possibility left should be "hosting"
+                } else if(request.Params.Predicate == "hosting"){ 
                     query = query.Where(d=>d.HostUsername == request.Username);
+                } else {
+                return Result<PagedList<UserActivityDto>>.Failure("Failed to retrieve activities");
                 }
                 
                 return Result<PagedList<UserActivityDto>>.Success(
