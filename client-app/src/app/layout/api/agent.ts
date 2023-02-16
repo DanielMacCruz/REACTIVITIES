@@ -6,6 +6,7 @@ import { Activity, ActivityFormValues } from '../models/activity';
 import { PaginatedResult } from '../models/pagination';
 import { Photo, Profile } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
+import { UserActivity } from '../models/userActivity';
 
 const sleep = (delay:number) => {
     return new Promise ((resolve) => {
@@ -90,9 +91,11 @@ const sleep = (delay:number) => {
         login: (user: UserFormValues) => requests.post<User>('/account/login', user),
         register: (user:UserFormValues) => requests.post<User>('/account/register',user)
     }
-    
+
+ 
     const Profiles = {
         get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+        getActivities: (username:string,predicate:string) => axios.get<UserActivity[]>(`profiles/${username}/activities?predicate=${predicate}`).then(responseBody),
         update: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
         uploadPhoto: (file: Blob) => {
             let formData = new FormData();

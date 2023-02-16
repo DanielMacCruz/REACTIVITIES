@@ -48,8 +48,6 @@ namespace Application.Activities
                     query=query.Where(x => x.HostUsername == _userAccessor.GetUsername());
                 }
 
-                //var activitiesToReturn= _mapper.Map<PagedList<ActivityDto>>(activities);
-
                 return Result<PagedList<ActivityDto>>.Success(
                     await PagedList<ActivityDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)
                 );

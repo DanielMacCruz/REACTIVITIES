@@ -28,7 +28,6 @@ namespace Application.Profiles
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
         private readonly IUserAccessor _userAccessor;
         
             
