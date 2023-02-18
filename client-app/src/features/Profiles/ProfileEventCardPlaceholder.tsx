@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Card, Icon, Image, Placeholder, PlaceholderHeader, PlaceholderImage, PlaceholderLine } from 'semantic-ui-react';
+import { Card, Placeholder, PlaceholderHeader, PlaceholderLine } from 'semantic-ui-react';
 
 export default observer (function ProfileEventCardPlaceholder(){
     return(

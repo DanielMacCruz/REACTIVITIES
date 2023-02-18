@@ -25,7 +25,7 @@ export default function PhotoWidgetDropzone({setFiles}: Props) {
         preview:URL.createObjectURL(file)
     }, [setFiles])))
     // Do something with the files
-  }, [])
+  }, [setFiles])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (

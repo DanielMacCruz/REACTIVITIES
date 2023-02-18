@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
-import { Button, Grid, Header, Icon, Item, Segment, Image, Tab } from 'semantic-ui-react';
+import { Button, Grid, Header, Icon, Item, Segment, Tab } from 'semantic-ui-react';
 import MyTextArea from '../../app/common/form/MyTextArea';
 import MyTextInput from '../../app/common/form/MyTextInput';
 import { Profile } from '../../app/layout/models/profile';
@@ -14,7 +14,7 @@ interface Props{
 
 export default observer(function ProfileAbout({profile}:Props) {
 
-    const{profileStore: {loading, isCurrentUser, updateProfile}} = useStore();
+    const{profileStore: { isCurrentUser, updateProfile}} = useStore();
     const[editMode, setEditMode] = useState(false);
 
     const validationSchema = Yup.object({

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CardGroup, Menu, Segment } from 'semantic-ui-react'
 import { Profile } from '../../app/layout/models/profile';
 import { useStore } from '../../app/stores/store';
