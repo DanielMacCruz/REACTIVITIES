@@ -32,11 +32,11 @@ app.UseXXssProtection(opt=> opt.EnabledWithBlockMode());
 app.UseXfo(opt=>opt.Deny());
 app.UseCsp(opt=>opt
   .BlockAllMixedContent()
-  .StyleSources(s=>s.Self())
-  .FontSources(s=>s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+  .StyleSources(s=>s.Self().CustomSources("https://fonts.googleapis.com"))
+  .FontSources(s=>s.Self().CustomSources("https://fonts.gstatic.com","https://fonts.googleapis.com", "data:"))
   .FormActions(s=>s.Self())
-  .ImageSources(s=>s.Self().CustomSources("blob:","https://res.cloudinary.com"))
-  .ScriptSources(s=>s.Self())
+  .ImageSources(s=>s.Self().CustomSources("https://platform-lookaside.fbsbx.com","data:","blob:","https://res.cloudinary.com"))
+  .ScriptSources(s=>s.Self().CustomSources("inline","https://connect.facebook.net"))
 );
 
 if (app.Environment.IsDevelopment())
