@@ -15,12 +15,12 @@ export default observer (function HomePage () {
                     <Image src='/assets/logofinal2.png' alt='logo' style={{marginBottom:0}}/>
                     
                 </Header>
+                    <Header as='h2' inverted content='Welcome to Act' />
+                                
                 {userStore.isLoggedIn ? (
                     <>
-                    <Header as='h2' inverted content='Welcome to Act' />
-                    <Button as={Link} to='/activities' size='huge' content inverted>Go to activities {(<Icon name='arrow right'/>)} </Button> 
+                        <Button as={Link} to='/activities' size='huge' content inverted>Go to activities {(<Icon name='arrow right'/>)} </Button> 
 
-                    
                     </>
                     
                 ):(
@@ -40,6 +40,7 @@ export default observer (function HomePage () {
                     
                     )
                 }
+               
                                
             </Container>
             </Segment>
